@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://ndingwall.github.io/blog/" />
 <meta property="og:site_name" content="Nick Dingwall" />
 <script type="application/ld+json">
-{"description":"Personal blog. Opinions and mistakes my own.","@type":"WebSite","headline":"Nick Dingwall","url":"https://ndingwall.github.io/blog/","name":"Nick Dingwall","@context":"https://schema.org"}</script>
+{"description":"Personal blog. Opinions and mistakes my own.","@type":"WebSite","url":"https://ndingwall.github.io/blog/","name":"Nick Dingwall","headline":"Nick Dingwall","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ndingwall.github.io/blog/feed.xml" title="Nick Dingwall" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -32,7 +32,7 @@
 <meta property="og:url" content="https://ndingwall.github.io/blog/" />
 <meta property="og:site_name" content="Nick Dingwall" />
 <script type="application/ld+json">
-{"description":"Personal blog. Opinions and mistakes my own.","@type":"WebSite","headline":"Nick Dingwall","url":"https://ndingwall.github.io/blog/","name":"Nick Dingwall","@context":"https://schema.org"}</script>
+{"description":"Personal blog. Opinions and mistakes my own.","@type":"WebSite","url":"https://ndingwall.github.io/blog/","name":"Nick Dingwall","headline":"Nick Dingwall","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -90,13 +90,9 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><p>This site is built with <a href="https://github.com/fastai/fastpages">fastpages</a>, An easy to use blogging platform with extra features for Jupyter Notebooks.</p>
+        <div class="home"><p>This nascent site will be a repository for thoughts too big for a tweet that I really have to stop bothering my friends with. It will likely focus on natural language processing and machine learning, but some other topics might creep in from time to time. I’ll be impressed if I manage two posts a year.</p>
 
-<p><img src="/blog/images/diagram.png" alt="" title="https://github.com/fastai/fastpages" /></p>
-
-<p><a href="https://github.com/fastai/fastpages">fastpages</a> automates the process of creating blog posts via GitHub Actions, so you don’t have to fuss with conversion scripts.  A full list of features can be found on <a href="https://github.com/fastai/fastpages">GitHub</a>.</p>
-
-<p>You can edit the <code class="highlighter-rouge">index.html</code> file to change this content.</p>
+<p>Some earlier posts are hosted on the <a href="https://roamanalytics.com/research/?_sf_s=dingwall">Roam Analytics research blog</a>. One describes my work <a href="https://roamanalytics.com/2018/07/09/fine-tuning-glove-representations/">extending GloVe</a> with a retrofitting term to permit the fine tuning of general-purpose representations to small, domain-specialized corpora. Another discusses <a href="https://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/">a limitation of common random forest implementations</a> when faced with categorical data. A third shows that a medical <a href="https://roamanalytics.com/research/?_sf_s=dingwall">provider’s specialty can be predicted from prescribing patterns</a>.</p>
 
 <h1 id="posts">Posts</h1>
 
@@ -123,31 +119,11 @@ window.onload = wrap_img;
       </div><div class="col-8 d-table-cell p-3">
         <h3>
           <a class="post-link" href="/blog/tokenization/language%20models/byte%20pair%20encoding/unigram%20language%20model/2020/06/11/tokenization.html">
-            Byte Pair Encoding vs Unigram LM
+            Byte Pair Encoding vs Unigram Language Modeling
           </a>
         </h3>
-        <p class="post-meta-description">In this post, I describe how the tokenizers used by the best-performing language models (including Bert and its variants, and GPT-2 and -3) poorly reflect the morphology of English text. Following recent work by Kaj Bostrom and Greg Durrett, I show that tokenizers that use unigram language modeling to segment text outperform those that use byte pair encoding when evaluated against 'gold-standard' tokenizations. I offer some additional motivation for caring about tokenization in support of Bostrom and Durrett's empirical evidence.</p>
+        <p class="post-meta-description">Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had planned to design a better one and to try and demonstrate its potential over the standard byte pair encoding method (BPE). But Kaj Bostrom and Greg Durrett <a href='https://arxiv.org/abs/2004.03720'>beat me to it</a> so this blog post materialized instead, where I add some additional motivation and  evaluate both methods against 'gold standard' tokenizations.</p>
           <p class="post-meta">Jun 11, 2020</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-4 d-table-cell p-3 v-align-middle">
-        <img class="image-preview " src="/blog/images/chart-preview.png" />
-      </div><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/blog/jupyter/2020/02/20/test.html">
-            Fastpages Notebook Blog Post
-          </a>
-        </h3>
-        <p class="post-meta-description">A tutorial of fastpages for Jupyter notebooks.</p>
-          <p class="post-meta">Feb 20, 2020</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/blog/markdown/2020/01/14/test-markdown-post.html">
-            An Example Markdown Post
-          </a>
-        </h3>
-        <p class="post-meta-description">A minimal example of using markdown with fastpages.</p>
-          <p class="post-meta">Jan 14, 2020</p>
       </div>
   </div></li></ul>
 
