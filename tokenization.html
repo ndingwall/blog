@@ -312,7 +312,51 @@ window.onload = wrap_img;
 <h2 id="Byte-pair-encoding-(BPE)">Byte pair encoding (BPE)<a class="anchor-link" href="#Byte-pair-encoding-(BPE)"> </a></h2><p>The tokenizer used by GPT-2 (and most variants of Bert) is built using <a href="https://leimao.github.io/blog/Byte-Pair-Encoding/"><em>byte pair encoding</em></a> (BPE). Bert itself uses some proprietary heuristics to learn its vocabulary but tokenization uses the same greedy algorithm as BPE. BPE comes from information theory: the objective is to maximally compress a dataset by replacing common substrings with tokens, morphology be damned.</p>
 <p>Are we disadvantaging language models by partitioning words in ways that obscure the relationships between them? Perhaps this doesn't matter. Traditional NLP models used whole words as tokens which by definition have to be learned independently, so we're better off than we used to be! Bert and GPT-2 are able to achieve astounding results with these 'misleading' tokens: the models evidently have both enough representational capacity and data to learn how to handle misleading tokens in deeper layers. So the <code>dest</code> subword representation gets a little bit of <code>de-</code> plus a little bit of <code>destiny/destroy/destination/etc</code>, and they see <code>destabilize</code> and <code>stabilize</code> often enough that it can store the same aspects of 'meaning' redundantly. Deeper layers might be elegantly handling this redundancy by implicitly breaking <code>dest</code> in two depending on surrounding tokens.</p>
 <p>On the other hand, the job of machine learning algorithms is to find and learn regularities in the training data. Providing them with the tokens that best capture these regularities (such as prefixes and suffixes) seems likely to help. Perhaps such a model could be smaller or could train more quickly.</p>
-<p>Oddly, though, BPE has been more-or-less universally accepted as the standard preprocessing step for language modelling. Even Google's <a href="https://arxiv.org/abs/1910.10683">T5 paper</a> which, in 30 meticulous pages, adjusted and evaluated every hyperparameter imaginable⁠, treated the tokenizer as fixed. In the <a href="https://arxiv.org/abs/1907.11692">RoBERTa paper</a>, Yinhan Liu <em>et al</em> comment that the Wordpiece tokenizer performs better than vanilla BPE, but choose to use BPE anyway since Wordpiece operates on characters and so risks <span style="font-variant:small-caps;">unknown</span> tokens for novel characters, and naturally leaves further comparison "to future work".</p>
+<p>Oddly, though, BPE has been more-or-less universally accepted as the standard preprocessing step for language modelling. Even Google's <a href="https://arxiv.org/abs/1910.10683">T5 paper</a> which, in 30 meticulous pages, adjusted and evaluated every hyperparameter imaginable⁠, treated the tokenizer as fixed. In the <a href="https://arxiv.org/abs/1907.11692">RoBERTa paper</a>, Yinhan Liu <em>et al</em> comment that the Wordpiece tokenizer performs better than vanilla BPE, but choose to use BPE anyway since Wordpiece operates on characters and so risks <span style="font-variant:small-caps;">unknown</span> tokens for rare characters like the <a href="https://en.wikipedia.org/wiki/Palatal_click">Palatal click</a>, used in some African languages:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p><div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;ǂ&quot;</span>  <span class="c1"># Palatal click</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bert: ǂ -&gt;&quot;</span><span class="p">,</span> <span class="n">bert_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPT2: ǂ -&gt;&quot;</span><span class="p">,</span> <span class="n">gpt2_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+</p>
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Bert: ǂ -&gt; [&#39;[UNK]&#39;]
+GPT2: ǂ -&gt; [&#39;Ç&#39;, &#39;Ĥ&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Unigram-language-modeling">Unigram language modeling<a class="anchor-link" href="#Unigram-language-modeling"> </a></h2><p><a href="https://arxiv.org/abs/2004.03720">Recent work by Kaj Bostrom and Greg Durrett</a> showed that by simply replacing BPE with a different method, morphology is better preserved and a language model trained on the resulting tokens shows improvements when fine tuned on downstream tasks.</p>
 <p>Surprisingly, the replacement—unigram language modeling—has been under our noses all along. (Don't be confused with the <em>language model</em> in the name: this is still the preprocessing step.) Unigram LM tokenizers are already implemented in Google's <a href="https://github.com/google/sentencepiece">sentencepiece library</a>, but it was introduced in <a href="https://arxiv.org/abs/1804.10959">a paper ostensibly about data augmentation for translation models</a> and so the wider significance seems to have been missed.</p>
 <p>Bostrom and Durrett's paper show some examples illustrating the difference:</p>
@@ -323,12 +367,6 @@ window.onload = wrap_img;
     
 </figure>
 </p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>They explain that unigram LMs recover common suffixes like 'ly', 's' and 'ing' much more often than BPE. This is exactly what we wanted! I trained my own unigram LM and BPE tokenizers on 10 million randomly-selected sentences from Wikipedia to see if I could replicate these differences and to compare how they treat my <code>destabilizing</code> example. Here are the results with vocabularies limited to 8k and 32k words:</p>
 
 </div>
