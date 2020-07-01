@@ -308,49 +308,15 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A human reading <code>dest-igmat-ize</code> would have trouble understanding it, until they recognized that the <code>st</code> belongs in the next group. Indeed, hyphenation dictionaries for e-readers disallow hyphens that break syllables for exactly this reason.</p>
-<h2 id="Byte-pair-encoding-(BPE)">Byte pair encoding (BPE)<a class="anchor-link" href="#Byte-pair-encoding-(BPE)"> </a></h2><p>The tokenizer used by GPT-2 (and most variants of Bert) is built using <a href="https://leimao.github.io/blog/Byte-Pair-Encoding/"><em>byte pair encoding</em></a> (BPE). Bert itself uses some proprietary heuristics to learn its vocabulary but tokenization uses the same greedy algorithm as BPE. BPE comes from information theory: the objective is to maximally compress a dataset by replacing common substrings with tokens, morphology be damned.</p>
-<p>Are we disadvantaging language models by partitioning words in ways that obscure the relationships between them? Perhaps this doesn't matter. Traditional NLP models used whole words as tokens which by definition have to be learned independently, so we're better off than we used to be! Bert and GPT-2 are able to achieve astounding results with these 'misleading' tokens: the models evidently have both enough representational capacity and data to learn how to handle misleading tokens in deeper layers. So the <code>dest</code> subword representation gets a little bit of <code>de-</code> plus a little bit of <code>destiny/destroy/destination/etc</code>, and they see <code>destabilize</code> and <code>stabilize</code> often enough that it can store the same aspects of 'meaning' redundantly. Deeper layers might be elegantly handling this redundancy by implicitly breaking <code>dest</code> in two depending on surrounding tokens.</p>
+<p>A human reading <code>dest-igmat-ize</code> would have trouble understanding it until they recognized that the <code>st</code> belongs in the next group. Indeed, hyphenation dictionaries for e-readers disallow hyphens that break syllables for exactly this reason.</p>
+<h2 id="Byte-pair-encoding-(BPE)">Byte pair encoding (BPE)<a class="anchor-link" href="#Byte-pair-encoding-(BPE)"> </a></h2><p>The tokenizer used by GPT-2 (and most variants of Bert) is built using <a href="https://leimao.github.io/blog/Byte-Pair-Encoding/"><em>byte pair encoding</em></a> (BPE). Bert itself uses some proprietary heuristics to learn its vocabulary but uses the same greedy algorithm as BPE to tokenize. BPE comes from information theory: the objective is to maximally compress a dataset by replacing common substrings with tokens, morphology be damned.</p>
+<p>Are we disadvantaging language models by partitioning words in ways that obscure the relationships between them? Perhaps this doesn't matter. Traditional NLP models used whole words as tokens which by definition have to be learned independently, so we're better off than we used to be! Bert and GPT-2 are able to achieve astounding results with these 'misleading' tokens. The models are large enough that (presumably) the <code>dest</code> subword representation gets a little bit of <code>de-</code> plus a little bit of <code>destiny/destroy/destination/etc</code>, and they train on so much data that they see variants of <code>stabilize</code> often enough to learn the same aspects of 'meaning' redundantly.</p>
 <p>On the other hand, the job of machine learning algorithms is to find and learn regularities in the training data. Providing them with the tokens that best capture these regularities (such as prefixes and suffixes) seems likely to help. Perhaps such a model could be smaller or could train more quickly.</p>
-<p>Oddly, though, BPE has been more-or-less universally accepted as the standard preprocessing step for language modelling. Even Google's <a href="https://arxiv.org/abs/1910.10683">T5 paper</a> which, in 30 meticulous pages, adjusted and evaluated every hyperparameter imaginable⁠, treated the tokenizer as fixed. In the <a href="https://arxiv.org/abs/1907.11692">RoBERTa paper</a>, Yinhan Liu <em>et al</em> comment that the Wordpiece tokenizer performs better than vanilla BPE, but choose to use BPE anyway since Wordpiece operates on characters and so risks <span style="font-variant:small-caps;">unknown</span> tokens for rare characters like the <a href="https://en.wikipedia.org/wiki/Palatal_click">Palatal click</a>, used in some African languages. BPE at least converts it to something unique:</p>
+<p>Oddly, though, BPE has been more-or-less universally accepted as the standard preprocessing step for language modelling. Even Google's <a href="https://arxiv.org/abs/1910.10683">T5 paper</a> which, in 30 meticulous pages, adjusted and evaluated every hyperparameter imaginable⁠, treated the tokenizer as fixed. The <a href="https://arxiv.org/abs/1907.11692">RoBERTa paper</a> does consider tokenization in the <em>Text Encoding</em> section, but only compares variants of BPE (Bert's tokenizer and vanilla BPE).</p>
 
 </div>
 </div>
 </div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;ǂ&quot;</span>  <span class="c1"># Palatal click</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bert:&quot;</span><span class="p">,</span> <span class="n">bert_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPT2:&quot;</span><span class="p">,</span> <span class="n">gpt2_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Bert: [&#39;[UNK]&#39;]
-GPT2: [&#39;Ç&#39;, &#39;Ĥ&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Unigram-language-modeling">Unigram language modeling<a class="anchor-link" href="#Unigram-language-modeling"> </a></h2><p><a href="https://arxiv.org/abs/2004.03720">Recent work by Kaj Bostrom and Greg Durrett</a> showed that by simply replacing BPE with a different method, morphology is better preserved and a language model trained on the resulting tokens shows improvements when fine tuned on downstream tasks.</p>
@@ -437,7 +403,7 @@ GPT2: [&#39;Ç&#39;, &#39;Ĥ&#39;]
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I'll call a subword <em>morphologically sound</em> if it consists of one or more entire Merriam Webster subwords. For example, <code>de</code>, <code>desta</code>, <code>lize</code> and <code>destabilize</code> are all morphologically sound, but <code>dest</code> isn't. We can't expect a tokenizer to choose 'morphologically sound' subwords every time since that would require an enormous vocabulary. Nevertheless, if tokenizer A produces more morphologically sound subwords than tokenizer B, it seems reasonable to conclude that tokenizer A better captures morphology than B. The table below shows a few examples color-coded to indicate which subwords are morphologically sound:</p>
+<p>I'll call a subword <em>morphologically sound</em> if it consists of one or more entire Merriam Webster subwords. For example, <code>de</code>, <code>lize</code>, <code>stabilize</code> and <code>destabilize</code> are all morphologically sound, but <code>dest</code> isn't. We can't expect a tokenizer to choose 'morphologically sound' subwords every time since that would require an enormous vocabulary; nevertheless, if tokenizer A produces more morphologically sound subwords than tokenizer B, it seems reasonable to conclude that tokenizer A better captures morphology than B. The table below shows a few examples color-coded to indicate which subwords are morphologically sound:</p>
 
 </div>
 </div>
@@ -674,7 +640,7 @@ GPT2: [&#39;Ç&#39;, &#39;Ĥ&#39;]
 </figure>
 </p>
 <p>_Example of a parse tree from <a href="https://en.wikipedia.org/wiki/Parse_tree">Wikipedia</a>._</p>
-<p>Attention can model these trees since every token can directly attend to any other, unlike RNNs which model distances linearly. That is, attention gives <em>ball</em> a direct connection to <em>John</em>. But it's rare that a token should need to attend to another 500 tokens away, and so most of this computation is wasted. To best reflect a tree structure, we'd want attention to be applied to windowed subsequences at the bottom layers of a network and for those layers to produce a shorter representation that can be combined via attention with the outputs from neighboring windows. I have vague ideas about how this might be realized, but I'm ill-equipped to test them! I'd love to hear about attempts to do anything like this, or about why it wouldn't work. You can tweet me <a href="https://twitter.com/nick_dingwall">@ndingwall</a> or comment below.</p>
+<p>Attention can model these trees since every token can directly attend to any other, unlike RNNs which model distances linearly. That is, attention gives <em>ball</em> a direct connection to <em>John</em>. But it's rare that a token should need to attend to another 500 tokens away, and so most of this computation is wasted. To best reflect a tree structure, we'd want attention to be applied to windowed subsequences at the bottom layers of a network and for those layers to produce a shorter representation that can be combined via attention with the outputs from neighboring windows. That would allow the bottom layer to operate on characters while remaining computationally tractable. I have vague ideas about how this might be realized, but I'm poorly-equipped to test them out! I'd love to hear about attempts to do anything like this, or about why it wouldn't work. You can tweet me <a href="https://twitter.com/nick_dingwall">@ndingwall</a> or comment below.</p>
 
 </div>
 </div>
