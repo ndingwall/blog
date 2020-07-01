@@ -488,7 +488,7 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I score how well each tokenizer does on this task with the fraction of the subwords produced by a tokenizer that are morphologically sound (i.e. green in the table above). Bert gets a score of 6/22 = 0.27 for the sample above because 6 of its 22 subwords are green (<code>pen</code>, <code>ther</code>, <code>inter</code>, <code>mo</code>, <code>nod</code>, and <code>ular</code>), while GPT-2 gets 10/17 = 0.59 because 10 of its 17 subwords are green (including whole-word subwords like <code>spacing</code> and <code>penchant</code>).</p>
+<p>I score how well each tokenizer does on this task with the fraction of the subwords produced by a tokenizer that are morphologically sound (i.e. green in the table above). Bert gets a score of 6/22 = 27% for the sample above because 6 of its 22 subwords are green (<code>pen</code>, <code>ther</code>, <code>inter</code>, <code>mo</code>, <code>nod</code>, and <code>ular</code>), while GPT-2 gets 10/17 = 59% because 10 of its 17 subwords are green (including whole-word subwords like <code>spacing</code> and <code>penchant</code>).</p>
 <p>We can't draw conclusions from this tiny sample, so I repeated the evaluation with a much larger sample of 8,000 words. Since having access to more subwords allows a tokenizer to make fewer splits and thus provides an advantage, I built tokenizers with different vocabulary sizes and plotted their scores against the vocabulary size (disregarding any tokens that include any non-ASCII characters to control for different numbers of characters represented).</p>
 
 </div>
