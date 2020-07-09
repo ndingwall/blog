@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Nick Dingwall" />
 <meta property="og:image" content="https://ndingwall.github.io/blog/images/tokenization-preview.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-06-11T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-07-09T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://ndingwall.github.io/blog/tokenization"},"description":"Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett beat me to it and so this blog post materialized instead. I add some additional motivation, evaluate both methods against ‘gold standard’ tokenizations, and speculate about what might come next.","@type":"BlogPosting","url":"https://ndingwall.github.io/blog/tokenization","headline":"Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling","dateModified":"2020-06-11T00:00:00-05:00","datePublished":"2020-06-11T00:00:00-05:00","image":"https://ndingwall.github.io/blog/images/tokenization-preview.png","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://ndingwall.github.io/blog/tokenization"},"description":"Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett beat me to it and so this blog post materialized instead. I add some additional motivation, evaluate both methods against ‘gold standard’ tokenizations, and speculate about what might come next.","@type":"BlogPosting","url":"https://ndingwall.github.io/blog/tokenization","headline":"Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling","dateModified":"2020-07-09T00:00:00-05:00","datePublished":"2020-07-09T00:00:00-05:00","image":"https://ndingwall.github.io/blog/images/tokenization-preview.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ndingwall.github.io/blog/feed.xml" title="Nick Dingwall" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -36,9 +36,9 @@
 <meta property="og:site_name" content="Nick Dingwall" />
 <meta property="og:image" content="https://ndingwall.github.io/blog/images/tokenization-preview.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-06-11T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-07-09T00:00:00-05:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://ndingwall.github.io/blog/tokenization"},"description":"Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett beat me to it and so this blog post materialized instead. I add some additional motivation, evaluate both methods against ‘gold standard’ tokenizations, and speculate about what might come next.","@type":"BlogPosting","url":"https://ndingwall.github.io/blog/tokenization","headline":"Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling","dateModified":"2020-06-11T00:00:00-05:00","datePublished":"2020-06-11T00:00:00-05:00","image":"https://ndingwall.github.io/blog/images/tokenization-preview.png","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://ndingwall.github.io/blog/tokenization"},"description":"Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett beat me to it and so this blog post materialized instead. I add some additional motivation, evaluate both methods against ‘gold standard’ tokenizations, and speculate about what might come next.","@type":"BlogPosting","url":"https://ndingwall.github.io/blog/tokenization","headline":"Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling","dateModified":"2020-07-09T00:00:00-05:00","datePublished":"2020-07-09T00:00:00-05:00","image":"https://ndingwall.github.io/blog/images/tokenization-preview.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -99,8 +99,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling</h1><p class="page-description">Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett <a href='https://arxiv.org/abs/2004.03720'>beat me to it</a> and so this blog post materialized instead. I add some additional motivation, evaluate both methods against 'gold standard' tokenizations, and speculate about what might come next.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-11T00:00:00-05:00" itemprop="datePublished">
-        Jun 11, 2020
+    <h1 class="post-title p-name" itemprop="name headline">Tokenization for language modeling: Byte Pair Encoding vs Unigram Language Modeling</h1><p class="page-description">Tokenizers used by the best-performing language models (Bert, GPT-2, etc.) poorly reflect the morphology of English text. I had hoped to use some quarantine time to design one that more closely aligns to relationships between wordforms. But Kaj Bostrom and Greg Durrett <a href='https://arxiv.org/abs/2004.03720'>beat me to it</a> and so this blog post materialized instead. I add some additional motivation, evaluate both methods against 'gold standard' tokenizations, and speculate about what might come next.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-09T00:00:00-05:00" itemprop="datePublished">
+        Jul 9, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -132,7 +132,7 @@ window.onload = wrap_img;
         <div class="pb-5 d-flex flex-wrap flex-justify-end">
           <div class="px-2">
 
-    <a href="https://github.com/ndingwall/blog/tree/master/_notebooks/2020-06-11-tokenization.ipynb" role="button" target="_blank">
+    <a href="https://github.com/ndingwall/blog/tree/master/_notebooks/2020-07-09-tokenization.ipynb" role="button" target="_blank">
 <img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
     </a>
 </div>
@@ -147,7 +147,7 @@ window.onload = wrap_img;
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2020-06-11-tokenization.ipynb
+# file to edit: _notebooks/2020-07-09-tokenization.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -161,6 +161,7 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><em>My thanks to <a href="https://web.stanford.edu/~cgpotts/">Chris Potts</a> and to <a href="https://www.linkedin.com/in/ericjeske/">Eric Jeske</a> for valuable discussion of the ideas here and for their comments on early drafts of this post.</em></p>
 <p>Imagine that you're learning English and you come across the word <code>destabilizing</code>. You've never seen it before, but you have seen <code>de-</code> as a prefix in lots of other words and know it's something to do with negating what follows, and you've seen <code>stabilizing</code> too. With that information, you can come to a more-or-less perfect understanding of <code>destabilizing</code>.</p>
 <p>Now imagine that you mis-parsed the word and read it as <code>dest-abilizing</code>. Well, you've seen <code>dest</code> as the beginning of <code>destination</code>, <code>destiny</code> and <code>destroy</code>—perhaps <code>dest</code> is something to do with a future state? You've seen <code>ize</code> and <code>ing</code> suffixes, guess that <code>abilizing</code> means something like <code>enabling</code>, and conclude that <code>destabilizing</code> means something like <em>becoming able to do something</em>.</p>
 <p>Unfortunately, common language tokenizers (including those used in Bert and GPT-2) misread words in just this way <em>all the time</em>:</p>
@@ -488,8 +489,8 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I score how well each tokenizer does on this task with the fraction of the subwords produced by a tokenizer that are morphologically sound (i.e. green in the table above). Bert gets a score of 6/22 = 27% for the sample above because 6 of its 22 subwords are green (<code>pen</code>, <code>ther</code>, <code>inter</code>, <code>mo</code>, <code>nod</code>, and <code>ular</code>), while GPT-2 gets 10/17 = 59% because 10 of its 17 subwords are green (including whole-word subwords like <code>spacing</code> and <code>penchant</code>).</p>
-<p>We can't draw conclusions from this tiny sample, so I repeated the evaluation with a much larger sample of 8,000 words. Since having access to more subwords allows a tokenizer to make fewer splits and thus provides an advantage, I built tokenizers with different vocabulary sizes and plotted their scores against the vocabulary size (disregarding any tokens that include any non-ASCII characters to control for different numbers of characters represented).</p>
+<p>I score how well each tokenizer does on this task with the fraction of the subwords produced by a tokenizer that are morphologically sound (i.e. green). Bert gets a score of 6/22 = 27% for the sample above because 6 of its 22 subwords are green (<code>pen</code>, <code>ther</code>, <code>inter</code>, <code>mo</code>, <code>nod</code>, and <code>ular</code>), while GPT-2 gets 10/17 = 59% because 10 of its 17 subwords are green (including whole-word subwords like <code>spacing</code> and <code>penchant</code>).</p>
+<p>We can't draw conclusions from this tiny sample, so I repeated the evaluation with a much larger sample of 8,000 words. Since having access to more subwords allows a tokenizer to make fewer splits and thus provides an advantage, I built tokenizers with different vocabulary sizes and plotted their scores against the vocabulary size (not counting tokens that include any non-ASCII characters to control for different numbers of characters represented).</p>
 
 </div>
 </div>
