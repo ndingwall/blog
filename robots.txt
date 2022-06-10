@@ -1,1 +1,1 @@
-Sitemap: https://ndingwall.github.io/personal-blog/sitemap.xml
+Sitemap: https://ndingwall.github.io/blog/sitemap.xml
